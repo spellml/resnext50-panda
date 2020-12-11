@@ -27,6 +27,7 @@ LABELS = '/mnt/prostate-cancer-grade-assessment/train.csv'
 OUT_TRAIN = '/mnt/prostate-cancer-grade-assessment/train.zip'
 OUT_MASKS = '/mnt/prostate-cancer-grade-assessment/masks.zip'
 NUM_EPOCHS = 16
+BATCH_SIZE = 16
 
 
 ##############
@@ -152,6 +153,8 @@ def to_Mish(model):
 
 
 class PandaModel(nn.Module):
+    # NOTE(aleksey): n=6 because the value we are trying to predict is an ordinal categorical
+    # with 6 possible values.
     def __init__(self, arch='resnext50_32x4d_ssl', n=6, pre=True):
         super().__init__()
         m = torch.hub.load('facebookresearch/semi-supervised-ImageNet1K-models', arch)
@@ -202,7 +205,7 @@ model.cuda()
 optimizer = optim.Adam(model.parameters())
 criterion = nn.CrossEntropyLoss()
 dataset = PandaDataset()
-dataloader = DataLoader(dataset, batch_size=32)
+dataloader = DataLoader(dataset, batch_size=BATCH_SIZE)
 
 for epoch in range(1, NUM_EPOCHS + 1):
     losses = []
