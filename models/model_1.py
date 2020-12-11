@@ -267,13 +267,12 @@ for epoch in range(1, NUM_EPOCHS + 1):
                 print(
                     f'Finished eval epoch {epoch}, batch {i}. Loss: {curr_loss:.3f}.'
                 )
-            
-            writer.add_scalar(
-                'validation loss', curr_loss, epoch * len(test_dataloader) + i
-            )
             losses.append(curr_loss)
 
         print(
-            f'Finished training epoch {epoch}. '
+            f'Finished eval epoch {epoch}. '
             f'avg loss: {np.mean(losses)}; median loss: {np.min(losses)}'
+        )
+        writer.add_scalar(
+            'mean val loss', np.mean(losses), epoch + 1
         )
