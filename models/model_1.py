@@ -46,7 +46,7 @@ def get_train_test_split():
         df = pd.read_csv(LABELS).set_index('image_id')
         df = df.loc[files]
     df = df.reset_index()
-    train_df = df.sample(len(df) * TRAIN_TEST_SPLIT)
+    train_df = df.sample(round(len(df) * TRAIN_TEST_SPLIT))
     test_df = df.loc[df.index.difference(train_df.index)]
     return train_df, test_df
 
