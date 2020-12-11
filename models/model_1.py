@@ -238,7 +238,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
             )
 
         writer.add_scalar(
-            'training loss', curr_loss, epoch * len(dataloader) + i
+            'training loss', curr_loss, epoch * len(train_dataloader) + i
         )
         losses.append(curr_loss)
 
@@ -269,7 +269,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
                 )
             
             writer.add_scalar(
-                'validation loss', curr_loss, epoch * len(dataloader) + i
+                'validation loss', curr_loss, epoch * len(test_dataloader) + i
             )
             losses.append(curr_loss)
 
