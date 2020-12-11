@@ -274,5 +274,5 @@ for epoch in range(1, NUM_EPOCHS + 1):
             f'avg loss: {np.mean(losses)}; median loss: {np.min(losses)}'
         )
         writer.add_scalar(
-            'mean val loss', np.mean(losses), epoch + 1
+            'mean val loss', np.mean(losses), epoch
         )
