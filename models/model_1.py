@@ -16,7 +16,6 @@ from torchvision import transforms
 from tqdm import tqdm
 import numpy as np
 import pandas as pd
-import cv2
 from PIL import Image
 
 import os
@@ -24,13 +23,10 @@ import io
 import zipfile
 
 
-TRAIN = '/mnt/prostate-cancer-grade-assessment/train_images/'
-MASKS = '/mnt/prostate-cancer-grade-assessment/train_label_masks/'
 LABELS = '/mnt/prostate-cancer-grade-assessment/train.csv'
-OUT_TRAIN = '/spell/datasets/working/train.zip'
-OUT_MASKS = '/spell/datasets/working/masks.zip'
-sz = 128
-N = 16
+OUT_TRAIN = '/mnt/prostate-cancer-grade-assessment/train.zip'
+OUT_MASKS = '/mnt/prostate-cancer-grade-assessment/masks.zip'
+NUM_EPOCHS = 16
 
 
 ##############
@@ -198,9 +194,7 @@ class PandaModel(nn.Module):
 # TRAINING LOOP #
 #################
 
-# writer = SummaryWriter(f'/spell/tensorboards/model_1')
-
-NUM_EPOCHS = 16
+writer = SummaryWriter(f'/spell/tensorboards/model_1')
 
 model = PandaModel()
 model.cuda()
@@ -230,9 +224,9 @@ for epoch in range(1, NUM_EPOCHS + 1):
                 f'Finished epoch {epoch}, batch {i}. Loss: {curr_loss:.3f}.'
             )
 
-        # writer.add_scalar(
-        #     'training loss', curr_loss, epoch * len(dataloader) + i
-        # )
+        writer.add_scalar(
+            'training loss', curr_loss, epoch * len(dataloader) + i
+        )
         losses.append(curr_loss)
 
     print(
